@@ -8,6 +8,7 @@ const productImages = [
   "https://s.alicdn.com/@sc04/kf/Ha7bdb6a357444c00b217448b58978ea1p.jpg",
   "https://s.alicdn.com/@sc04/kf/H84c0ed3ae1b24ee8b7830a8a2cba7801y.png",
   "https://s.alicdn.com/@sc04/kf/Ha68924203da14607addc3b2338288646U.jpg",
+  "https://s.alicdn.com/@sc04/kf/He81b99ab25b74fcfbb6f0de838848370j.png",
 ];
 
 export default function TurboJetLanding() {
