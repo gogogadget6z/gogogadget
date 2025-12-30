@@ -2,12 +2,18 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Wind, Sparkles, CircleDot, Flame, Check, X, Star, ChevronDown, ShoppingCart, Truck, Shield, RotateCcw, CreditCard } from "lucide-react";
+import { Wind, Sparkles, CircleDot, Flame, Check, X, Star, ChevronDown, ShoppingCart, Truck, Shield, RotateCcw, CreditCard, ChevronLeft, ChevronRight } from "lucide-react";
+
+const productImages = [
+  "https://s.alicdn.com/@sc04/kf/Ha7bdb6a357444c00b217448b58978ea1p.jpg",
+  "https://s.alicdn.com/@sc04/kf/H84c0ed3ae1b24ee8b7830a8a2cba7801y.png",
+];
 
 export default function TurboJetLanding() {
   const [timeLeft, setTimeLeft] = useState({ hours: 3, minutes: 45, seconds: 12 });
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [currentImage, setCurrentImage] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -143,11 +149,41 @@ export default function TurboJetLanding() {
           </div>
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-600/20 rounded-3xl blur-3xl" />
+            {/* Image principale */}
             <img
-              src="https://s.alicdn.com/@sc04/kf/Ha7bdb6a357444c00b217448b58978ea1p.jpg"
-              alt="Turbo Jet 2025"
+              src={productImages[currentImage]}
+              alt={`Turbo Jet 2025 - Image ${currentImage + 1}`}
               className="relative rounded-3xl shadow-2xl w-full"
             />
+            {/* Flèches navigation */}
+            {productImages.length > 1 && (
+              <>
+                <button
+                  onClick={() => setCurrentImage((prev) => (prev === 0 ? productImages.length - 1 : prev - 1))}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                  onClick={() => setCurrentImage((prev) => (prev === productImages.length - 1 ? 0 : prev + 1))}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              </>
+            )}
+            {/* Miniatures */}
+            <div className="flex justify-center gap-2 mt-4">
+              {productImages.map((img, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentImage(i)}
+                  className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition ${currentImage === i ? "border-cyan-500" : "border-transparent opacity-60 hover:opacity-100"}`}
+                >
+                  <img src={img} alt={`Miniature ${i + 1}`} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
