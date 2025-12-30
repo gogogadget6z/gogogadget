@@ -5,7 +5,7 @@ import { Wind, Sparkles, Flame, ShoppingCart } from "lucide-react";
 
 export default function TurboJetBanner() {
   return (
-    <section className="mb-12 sm:mb-16">
+    <section id="turbo-jet" className="mb-12 sm:mb-16">
       <Link href="/turbo-jet" className="block group">
         <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-cyan-900/40 via-purple-900/40 to-cyan-900/40 border border-cyan-500/30 p-6 sm:p-8 hover:border-cyan-400/50 transition-all duration-300">
           {/* Glow effect */}

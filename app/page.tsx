@@ -95,9 +95,9 @@ export default function Home() {
 
           {/* Boutons d&apos;action */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="w-full sm:w-auto px-8 py-4 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-lg rounded-xl transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(234,179,8,0.2)]">
+            <a href="#turbo-jet" className="w-full sm:w-auto px-8 py-4 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-lg rounded-xl transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(234,179,8,0.2)] text-center">
               Voir les Pépites 🔥
-            </button>
+            </a>
             <button className="w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-semibold text-lg rounded-xl border border-white/10 transition-all">
               En savoir plus
             </button>
