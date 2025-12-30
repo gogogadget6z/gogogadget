@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Product, ProductVariant } from "@/types";
+import TurboJetBanner from "@/components/TurboJetBanner";
 
 export default function ProductDetail() {
   const params = useParams();
@@ -269,6 +270,14 @@ export default function ProductDetail() {
             </div>
           </div>
         </div>
+
+        {/* Turbo Jet Banner - Produit recommandé */}
+        {product.id !== "turbo-jet" && (
+          <div className="mt-16">
+            <h3 className="text-2xl font-bold text-white mb-6 text-center">Vous pourriez aussi aimer</h3>
+            <TurboJetBanner />
+          </div>
+        )}
       </main>
     </div>
   );
