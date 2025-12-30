@@ -302,6 +302,52 @@ L'accessoire parfait pour les sportifs, les aventuriers et tous ceux qui veulent
       },
     ],
   },
+  {
+    id: "turbo-jet",
+    name: "Turbo Jet 2025 - Souffleur 4-en-1",
+    description: `Le Turbo Jet 2025 : L'Outil 4-en-1 Ultime pour les Passionnés de Tech
+
+Découvrez le souffleur électrique le plus polyvalent du marché. Conçu pour les gamers, les bricoleurs et tous ceux qui exigent la perfection.
+
+Pourquoi vous allez l'adorer :
+
+🌀 Souffleur Turbo : Puissance de 63 m/s pour nettoyer clavier, PC, console en profondeur. Fini la poussière incrustée !
+
+🧹 Aspirateur Intégré : Mode aspiration pour récupérer miettes et débris. Parfait pour le bureau ou la voiture.
+
+🎈 Gonfleur Express : Gonflez matelas, bouées et ballons en quelques secondes. L'indispensable de l'été.
+
+🔥 Attise-Feu : Allumez votre barbecue ou cheminée sans effort grâce au mode soufflerie concentrée.
+
+Caractéristiques Techniques :
+• Moteur Brushless 100 000 RPM
+• Batterie 4000 mAh rechargeable USB-C
+• Vitesse d'air : 63 m/s
+• Filtre lavable et réutilisable
+• Poids : 450g seulement
+
+L'outil parfait pour tous les usages du quotidien.`,
+    price: 34.90,
+    category: "electrique",
+    image: "https://s.alicdn.com/@sc04/kf/Ha7bdb6a357444c00b217448b58978ea1p.jpg",
+    images: ["https://s.alicdn.com/@sc04/kf/Ha7bdb6a357444c00b217448b58978ea1p.jpg"],
+    hasOffer: true,
+    offerBadge: "LANCEMENT : Livraison Offerte",
+    variants: [
+      {
+        id: "turbo-jet-1",
+        name: "Turbo Jet 2025 - 1 unité",
+        price: 34.90,
+        quantity: 1,
+      },
+      {
+        id: "turbo-jet-2",
+        name: "Pack Duo (-20%)",
+        price: 55.90,
+        quantity: 2,
+      },
+    ],
+  },
 ];
 
 export const categories = ["electrique", "maison", "accessoires"] as const;
