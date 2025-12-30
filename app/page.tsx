@@ -130,7 +130,7 @@ export default function Home() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 max-w-5xl mx-auto">
                   {products
-                    .filter((p: Product) => p.category === "electrique")
+                    .filter((p: Product) => p.category === "electrique" && p.id !== "turbo-jet")
                     .map((product: Product) => (
                       <ProductCard key={product.id} product={product} />
                     ))}
