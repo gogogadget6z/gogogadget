@@ -330,7 +330,7 @@ L'outil parfait pour tous les usages du quotidien.`,
     price: 99.00,
     category: "electrique",
     image: "https://s.alicdn.com/@sc04/kf/Ha7bdb6a357444c00b217448b58978ea1p.jpg",
-    images: ["https://s.alicdn.com/@sc04/kf/Ha7bdb6a357444c00b217448b58978ea1p.jpg"],
+    images: ["https://s.alicdn.com/@sc04/kf/Ha7bdb6a357444c00b217448b58978ea1p.jpg", "https://s.alicdn.com/@sc04/kf/Ha7bdb6a357444c00b217448b58978ea1p.jpg_80x80.jpg"],
     hasOffer: true,
     offerBadge: "LANCEMENT : Livraison Offerte",
     variants: [
