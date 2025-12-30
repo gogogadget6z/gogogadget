@@ -54,9 +54,9 @@ export default function TurboJetBanner() {
               {/* Price & CTA */}
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <div className="flex items-center gap-3">
-                  <span className="text-4xl font-black text-yellow-500">34,90€</span>
-                  <span className="text-xl text-gray-500 line-through">49,90€</span>
-                  <span className="bg-red-500 text-white text-sm font-bold px-2 py-1 rounded">-30%</span>
+                  <span className="text-4xl font-black text-yellow-500">99,00€</span>
+                  <span className="text-xl text-gray-500 line-through">149,00€</span>
+                  <span className="bg-red-500 text-white text-sm font-bold px-2 py-1 rounded">-33%</span>
                 </div>
                 <span className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-purple-600 text-white px-6 py-3 rounded-full font-bold group-hover:opacity-90 transition shadow-lg shadow-cyan-500/30">
                   <ShoppingCart className="w-5 h-5" />

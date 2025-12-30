@@ -327,7 +327,7 @@ Caractéristiques Techniques :
 • Poids : 450g seulement
 
 L'outil parfait pour tous les usages du quotidien.`,
-    price: 34.90,
+    price: 99.00,
     category: "electrique",
     image: "https://s.alicdn.com/@sc04/kf/Ha7bdb6a357444c00b217448b58978ea1p.jpg",
     images: ["https://s.alicdn.com/@sc04/kf/Ha7bdb6a357444c00b217448b58978ea1p.jpg"],
@@ -337,13 +337,13 @@ L'outil parfait pour tous les usages du quotidien.`,
       {
         id: "turbo-jet-1",
         name: "Turbo Jet 2025 - 1 unité",
-        price: 34.90,
+        price: 99.00,
         quantity: 1,
       },
       {
         id: "turbo-jet-2",
         name: "Pack Duo (-20%)",
-        price: 55.90,
+        price: 159.00,
         quantity: 2,
       },
     ],

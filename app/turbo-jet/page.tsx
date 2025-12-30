@@ -122,9 +122,9 @@ export default function TurboJetLanding() {
               Le souffleur 4-en-1 ultime : Souffle, Aspire, Gonfle & Attise le feu
             </p>
             <div className="flex items-center gap-4 mb-8">
-              <span className="text-4xl font-black text-yellow-500">34,90€</span>
-              <span className="text-xl text-gray-500 line-through">49,90€</span>
-              <span className="bg-red-500 text-white text-sm font-bold px-2 py-1 rounded">-30%</span>
+              <span className="text-4xl font-black text-yellow-500">99,00€</span>
+              <span className="text-xl text-gray-500 line-through">149,00€</span>
+              <span className="bg-red-500 text-white text-sm font-bold px-2 py-1 rounded">-33%</span>
             </div>
             <button
               onClick={handleCheckout}
@@ -309,8 +309,8 @@ export default function TurboJetLanding() {
           <h2 className="text-2xl font-bold text-white mb-2">Turbo Jet 2025</h2>
           <p className="text-gray-400 mb-6">Souffleur 4-en-1 Professionnel</p>
           <div className="flex items-center justify-center gap-4 mb-6">
-            <span className="text-4xl font-black text-yellow-500">34,90€</span>
-            <span className="text-xl text-gray-500 line-through">49,90€</span>
+            <span className="text-4xl font-black text-yellow-500">99,00€</span>
+            <span className="text-xl text-gray-500 line-through">149,00€</span>
           </div>
           <button
             onClick={handleCheckout}
