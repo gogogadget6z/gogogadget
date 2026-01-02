@@ -348,6 +348,43 @@ L'outil parfait pour tous les usages du quotidien.`,
       },
     ],
   },
+  {
+    id: "lampe-led",
+    name: "Lampe LED",
+    description: `La Lampe LED : L'Éclairage Intelligent et Économique
+
+Illuminez votre quotidien avec cette lampe LED moderne et pratique. Compacte, économique et polyvalente, elle s'adapte à tous vos besoins d'éclairage.
+
+Pourquoi vous allez l'adorer :
+
+💡 Éclairage LED Performant : Technologie LED basse consommation pour une lumière vive et homogène. Durée de vie exceptionnelle de plus de 50 000 heures.
+
+🔋 Ultra Économique : Consommation minimale pour un éclairage maximal. Réduisez votre facture d'électricité sans compromis sur la qualité de lumière.
+
+🎨 Design Moderne : Lignes épurées et finitions soignées qui s'intègrent parfaitement dans tous les intérieurs.
+
+♻️ Écologique : Pas de mercure, pas de rayons UV nocifs. Une solution d'éclairage respectueuse de l'environnement.
+
+L'accessoire indispensable pour un éclairage optimal au quotidien.`,
+    price: 9.99,
+    category: "maison",
+    image: "/images/placeholder.jpg",
+    hasOffer: false,
+    variants: [
+      {
+        id: "lampe-led-1",
+        name: "Lampe LED - 1 unité",
+        price: 9.99,
+        quantity: 1,
+      },
+      {
+        id: "lampe-led-2",
+        name: "Pack de 2 (-15%)",
+        price: 16.99,
+        quantity: 2,
+      },
+    ],
+  },
 ];
 
 export const categories = ["electrique", "maison", "accessoires"] as const;
