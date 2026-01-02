@@ -43,7 +43,8 @@ export default function ProductCard({ product }: ProductCardProps) {
   const placeholderImage = `https://placehold.co/400x400/${bgColor}/ffffff?text=${encodeURIComponent(product.name.split(" ")[0])}`;
 
   const getImageSrc = (img: string) => {
-    return img?.startsWith("/") ? img : placeholderImage;
+    if (!img) return placeholderImage;
+    return img.startsWith("/") || img.startsWith("http") ? img : placeholderImage;
   };
 
   const nextImage = (e: React.MouseEvent) => {
