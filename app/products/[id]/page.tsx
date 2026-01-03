@@ -127,7 +127,7 @@ export default function ProductDetail() {
                 />
               ) : (
                 <Image
-                  src={images[selectedImageIndex]}
+                  src={images[product.video ? selectedImageIndex - 1 : selectedImageIndex]}
                   alt={product.name}
                   fill
                   className="object-cover"
