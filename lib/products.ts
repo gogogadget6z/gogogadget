@@ -356,6 +356,7 @@ L'outil parfait pour tous les usages du quotidien.`,
     category: "maison",
     image: "/lampe-led-placeholder.jpg",
     images: ["/lampe-led-placeholder.jpg"],
+    video: "https://video.aliexpress-media.com/play/u/ae_sg_item/2215854041618/p/1/e/6/t/10301/1100224589229.mp4",
     hasOffer: false,
     variants: [
       {
