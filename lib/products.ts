@@ -348,6 +348,36 @@ L'outil parfait pour tous les usages du quotidien.`,
       },
     ],
   },
+  {
+    id: "7",
+    name: "Lampe LED à Détecteur de Mouvement",
+    description: `Veilleuse carrée rechargeable par USB. S'allume automatiquement, idéale pour les armoires, les escaliers et la cuisine.`,
+    price: 9.99,
+    category: "maison",
+    image: "/lampe-led-placeholder.jpg",
+    images: ["/lampe-led-placeholder.jpg"],
+    hasOffer: false,
+    variants: [
+      {
+        id: "7-unit",
+        name: "1 Lampe LED",
+        price: 9.99,
+        quantity: 1,
+      },
+      {
+        id: "7-duo",
+        name: "Lot de 2 (-15%)",
+        price: 16.99,
+        quantity: 2,
+      },
+      {
+        id: "7-trio",
+        name: "Lot de 3 (-20%)",
+        price: 23.99,
+        quantity: 3,
+      },
+    ],
+  },
 ];
 
 export const categories = ["electrique", "maison", "accessoires"] as const;
