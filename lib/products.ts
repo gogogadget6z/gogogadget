@@ -387,6 +387,7 @@ L'outil parfait pour tous les usages du quotidien.`,
     category: "electrique",
     image: "/chargeur-voiture-placeholder.jpg",
     images: ["/chargeur-voiture-placeholder.jpg"],
+    video: "https://video.aliexpress-media.com/play/u/ae_sg_item/2210628876402/p/1/e/6/t/10301/5000206030872.mp4",
     hasOffer: false,
     variants: [
       {
