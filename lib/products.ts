@@ -379,6 +379,30 @@ L'outil parfait pour tous les usages du quotidien.`,
       },
     ],
   },
+  {
+    id: "8",
+    name: "Chargeur Voiture 120W - Câbles Intégrés & Ciel Étoilé",
+    description: `Chargeur ultra-rapide 120W universel. Câbles rétractables (USB & Type-C) et une prise allume-cigare extra. Design unique avec projection ciel étoilé.`,
+    price: 24.99,
+    category: "electrique",
+    image: "/chargeur-voiture-placeholder.jpg",
+    images: ["/chargeur-voiture-placeholder.jpg"],
+    hasOffer: false,
+    variants: [
+      {
+        id: "8-unit",
+        name: "1 Chargeur 120W",
+        price: 24.99,
+        quantity: 1,
+      },
+      {
+        id: "8-duo",
+        name: "Lot de 2 (-15%)",
+        price: 42.49,
+        quantity: 2,
+      },
+    ],
+  },
 ];
 
 export const categories = ["electrique", "maison", "accessoires"] as const;
