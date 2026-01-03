@@ -24,7 +24,7 @@ export default function Footer() {
             <div className="flex items-center gap-4">
               {/* Instagram */}
               <a
-                href="#"
+                href="https://www.instagram.com/gogogadget.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-yellow-500 transition-colors"
