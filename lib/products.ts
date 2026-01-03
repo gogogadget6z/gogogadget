@@ -355,7 +355,7 @@ L'outil parfait pour tous les usages du quotidien.`,
     price: 9.99,
     category: "maison",
     image: "https://ae-pic-a1.aliexpress-media.com/kf/S837c62b2879143cb9e6e0876ef8681f6n.jpg",
-    images: ["https://ae-pic-a1.aliexpress-media.com/kf/S837c62b2879143cb9e6e0876ef8681f6n.jpg"],
+    images: ["https://ae-pic-a1.aliexpress-media.com/kf/S837c62b2879143cb9e6e0876ef8681f6n.jpg", "https://ae-pic-a1.aliexpress-media.com/kf/S77cc990792a84ffd862c0325ab0aba40J.jpg"],
     video: "https://video.aliexpress-media.com/play/u/ae_sg_item/2215854041618/p/1/e/6/t/10301/1100224589229.mp4",
     hasOffer: false,
     variants: [
