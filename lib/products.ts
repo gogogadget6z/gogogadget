@@ -386,7 +386,7 @@ L'outil parfait pour tous les usages du quotidien.`,
     price: 24.99,
     category: "electrique",
     image: "https://ae-pic-a1.aliexpress-media.com/kf/S903e786492b74b1eae94b553c8d2d5f92.jpg",
-    images: ["https://ae-pic-a1.aliexpress-media.com/kf/S903e786492b74b1eae94b553c8d2d5f92.jpg", "https://ae-pic-a1.aliexpress-media.com/kf/S04592463845a4bb58c8ba53e8f2e4debw.jpg"],
+    images: ["https://ae-pic-a1.aliexpress-media.com/kf/S903e786492b74b1eae94b553c8d2d5f92.jpg", "https://ae-pic-a1.aliexpress-media.com/kf/S04592463845a4bb58c8ba53e8f2e4debw.jpg", "https://ae-pic-a1.aliexpress-media.com/kf/Sbeecf0450e8d48b7ba171a957f18c8c4T.jpg"],
     video: "https://video.aliexpress-media.com/play/u/ae_sg_item/2210628876402/p/1/e/6/t/10301/5000206030872.mp4",
     hasOffer: false,
     variants: [
