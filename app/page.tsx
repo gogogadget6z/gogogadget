@@ -34,7 +34,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
             <Image
-              src="/logo-brand.jpg"
+              src="/logo-brand.png"
               alt="Gogo Gadget"
               width={60}
               height={60}
