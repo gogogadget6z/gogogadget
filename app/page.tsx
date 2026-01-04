@@ -38,17 +38,18 @@ export default function Home() {
               alt="Gogo Gadget"
               width={150}
               height={150}
-              className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-full object-cover transition-all duration-300 ease-in-out group-hover:-translate-y-0.5"
+              className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-full object-cover transition-all duration-300 ease-in-out group-hover:-translate-y-0.5 group-hover:brightness-125"
               style={{
-                boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.8), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',
+                border: '2px solid #F59E0B',
+                boxShadow: '0 0 10px rgba(245, 158, 11, 0.4)',
+                filter: 'brightness(1.1) contrast(1.1)',
                 imageRendering: '-webkit-optimize-contrast' as never,
-                WebkitFontSmoothing: 'antialiased',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0px 6px 6px rgba(0, 0, 0, 0.9), inset 0px 1px 0px rgba(255, 255, 255, 0.4)';
+                e.currentTarget.style.boxShadow = '0 0 15px rgba(245, 158, 11, 0.6)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0px 4px 4px rgba(0, 0, 0, 0.8), inset 0px 1px 0px rgba(255, 255, 255, 0.3)';
+                e.currentTarget.style.boxShadow = '0 0 10px rgba(245, 158, 11, 0.4)';
               }}
               priority
             />
