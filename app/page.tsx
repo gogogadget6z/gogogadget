@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Product } from "@/types";
 import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
-import { Wrench } from "lucide-react";
+import Image from "next/image";
 import TurboJetBanner from "@/components/TurboJetBanner";
 
 export default function Home() {
@@ -32,20 +32,24 @@ export default function Home() {
       {/* Header */}
       <header className="bg-[#1E1E1E]/95 backdrop-blur-md shadow-lg shadow-black/20 sticky top-0 z-50 border-b border-[#D4AF37]/20">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <Wrench
-              className="w-6 h-6 sm:w-8 sm:h-8 drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] flex-shrink-0"
-              style={{ color: '#D4AF37', filter: 'drop-shadow(0 0 3px rgba(212,175,55,0.4))' }}
+          <Link href="/" className="flex items-center gap-2 sm:gap-3">
+            <Image
+              src="/logo-brand.png"
+              alt="Gogo Gadget"
+              width={50}
+              height={50}
+              className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_0_8px_rgba(212,175,55,0.6)]"
+              priority
             />
             <div>
               <h1 className="text-xl sm:text-3xl font-extrabold font-[family-name:var(--font-playfair)] drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]" style={{ color: '#D4AF37' }}>
                 Gogo Gadget
               </h1>
               <p className="text-[10px] sm:text-xs italic tracking-wide hidden sm:block" style={{ color: '#A0A0A0' }}>
-                Les meilleures trouvailles de l'Inspecteur
+                Les meilleures trouvailles de l&apos;Inspecteur
               </p>
             </div>
-          </div>
+          </Link>
           <Link
             href="/admin"
             className="p-2 text-[#C0C0C0] hover:text-[#D4AF37] transition-colors"
