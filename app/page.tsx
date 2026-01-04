@@ -36,17 +36,19 @@ export default function Home() {
             <Image
               src="/logo-brand.png"
               alt="Gogo Gadget"
-              width={60}
-              height={60}
+              width={150}
+              height={150}
               className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-full object-cover transition-all duration-300 ease-in-out group-hover:-translate-y-0.5"
               style={{
-                boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.6), inset 0px 1px 2px rgba(255, 255, 255, 0.2), inset 0px -2px 3px rgba(0, 0, 0, 0.4)',
+                boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.8), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',
+                imageRendering: '-webkit-optimize-contrast' as never,
+                WebkitFontSmoothing: 'antialiased',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0px 8px 12px rgba(0, 0, 0, 0.7), inset 0px 1px 2px rgba(255, 255, 255, 0.3), inset 0px -2px 3px rgba(0, 0, 0, 0.5)';
+                e.currentTarget.style.boxShadow = '0px 6px 6px rgba(0, 0, 0, 0.9), inset 0px 1px 0px rgba(255, 255, 255, 0.4)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0px 4px 6px rgba(0, 0, 0, 0.6), inset 0px 1px 2px rgba(255, 255, 255, 0.2), inset 0px -2px 3px rgba(0, 0, 0, 0.4)';
+                e.currentTarget.style.boxShadow = '0px 4px 4px rgba(0, 0, 0, 0.8), inset 0px 1px 0px rgba(255, 255, 255, 0.3)';
               }}
               priority
             />
