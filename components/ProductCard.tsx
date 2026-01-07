@@ -21,7 +21,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   // Use images array if available, otherwise fall back to single image
   const images = product.images && product.images.length > 0
     ? product.images
-    : [product.image];
+    : product.image ? [product.image] : [];
 
   // Create media array: video first (if exists), then images
   const media: { type: "video" | "image"; src: string }[] = [];
@@ -29,7 +29,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     media.push({ type: "video", src: product.video });
   }
   images.forEach((img) => {
-    media.push({ type: "image", src: img });
+    if (img) media.push({ type: "image", src: img });
   });
 
   // Generate placeholder if no image
@@ -153,6 +153,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                     src={item.src}
                     className="w-full h-full object-cover"
                     muted
+                    playsInline
                   />
                   <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                     <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
