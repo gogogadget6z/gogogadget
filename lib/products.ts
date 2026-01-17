@@ -485,6 +485,7 @@ L'accessoire de survie indispensable pour tout automobiliste et motard averti !`
       "https://ae-pic-a1.aliexpress-media.com/kf/S8570e71a4cc24fdcb20469ebff46ed37S.jpg",
       "https://ae-pic-a1.aliexpress-media.com/kf/S39bc0b3f9b9247e8bffb38c91f10d9b8e.jpg",
     ],
+    video: "https://video.aliexpress-media.com/play/u/ae_sg_item/3000918697203/p/1/e/6/t/10301/5000244788208.mp4",
     hasOffer: true,
     offerBadge: "NOUVEAU • BEST-SELLER",
     variants: [
