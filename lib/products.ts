@@ -430,6 +430,7 @@ Le lot de 10 pièces pour équiper toute votre maison !`,
     image: "https://ae-pic-a1.aliexpress-media.com/kf/S242fff389ea14a2399b43b67835d3ff92.jpg",
     images: [
       "https://ae-pic-a1.aliexpress-media.com/kf/S242fff389ea14a2399b43b67835d3ff92.jpg",
+      "https://ae-pic-a1.aliexpress-media.com/kf/Sb91773405fc04f4d9ca98b1d346c9ad2v.jpg",
     ],
     video: "https://video.aliexpress-media.com/play/u/ae_sg_item/3000000362145/p/1/e/6/t/10301/1100213048365.mp4",
     hasOffer: true,
