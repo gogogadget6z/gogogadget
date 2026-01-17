@@ -253,9 +253,16 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="flex items-center justify-between gap-2 sm:gap-3">
           {/* Price */}
           <div className="flex flex-col">
-            <span className="text-xl sm:text-2xl font-extrabold text-[#F5F5F5] whitespace-nowrap">
-              {currentPrice.toLocaleString("fr-FR", { minimumFractionDigits: 2 })}&nbsp;€
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-xl sm:text-2xl font-extrabold text-[#F5F5F5] whitespace-nowrap">
+                {currentPrice.toLocaleString("fr-FR", { minimumFractionDigits: 2 })}&nbsp;€
+              </span>
+              {product.originalPrice && (
+                <span className="text-sm sm:text-base text-gray-500 line-through whitespace-nowrap">
+                  {product.originalPrice.toLocaleString("fr-FR", { minimumFractionDigits: 2 })}&nbsp;€
+                </span>
+              )}
+            </div>
             {selectedVariant && selectedVariant.quantity > 1 && (
               <span className="text-[10px] sm:text-xs text-[#D4AF37] font-medium whitespace-nowrap">
                 soit {(selectedVariant.price / selectedVariant.quantity).toFixed(2)}&nbsp;€/unité

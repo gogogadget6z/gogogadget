@@ -456,6 +456,52 @@ Le lot de 10 pièces pour équiper toute votre maison !`,
       },
     ],
   },
+  {
+    id: "10",
+    name: "Kit de Réparation Pneu Moto 'Stop & Go' (Pistolet Automatique)",
+    description: `Ne restez plus jamais bloqué sur la route ! Ce kit de réparation nouvelle génération utilise un système de pistolet à champignons pour boucher une crevaison en moins de 2 minutes, sans démonter la roue. Indispensable sous la selle de tout motard.
+
+Pourquoi c'est LE kit qu'il vous faut :
+
+🔧 Système Pistolet Automatique : Fini les rustines galère ! Le pistolet injecte un champignon de réparation en quelques secondes. Aucune compétence mécanique requise.
+
+⚡ Réparation en 2 Minutes : Crevaison détectée ? En moins de 2 minutes vous êtes de retour sur la route. Pas besoin de démonter la roue.
+
+🏍️ Compatible Toutes Motos : Fonctionne sur pneus tubeless de moto, scooter et quad. S'adapte à toutes les tailles de crevaison courantes.
+
+📦 Kit Complet : Pistolet + 10 champignons de réparation + colle vulcanisante + lime + étui de rangement compact.
+
+💪 Réparation Permanente : Contrairement aux bombes anti-crevaison, cette réparation est définitive. Roulez l'esprit tranquille.
+
+🎒 Ultra-Compact : Se glisse facilement sous la selle ou dans un top-case. Le compagnon idéal pour les longs trajets.
+
+L'accessoire de sécurité indispensable pour tout motard averti !`,
+    price: 34.90,
+    originalPrice: 49.90,
+    category: "electrique",
+    image: "https://placehold.co/400x400/f59e0b/ffffff?text=Kit+Pneu+Moto",
+    images: [
+      "https://placehold.co/400x400/f59e0b/ffffff?text=Stop+%26+Go",
+      "https://placehold.co/400x400/f59e0b/ffffff?text=Pistolet+Auto",
+      "https://placehold.co/400x400/f59e0b/ffffff?text=Kit+Complet",
+    ],
+    hasOffer: true,
+    offerBadge: "PROMO -30% • PREMIUM",
+    variants: [
+      {
+        id: "10-kit",
+        name: "Kit Stop & Go Complet",
+        price: 34.90,
+        quantity: 1,
+      },
+      {
+        id: "10-kit-recharge",
+        name: "Kit + Recharge 10 champignons",
+        price: 44.90,
+        quantity: 1,
+      },
+    ],
+  },
 ];
 
 export const categories = ["electrique", "maison", "accessoires"] as const;
