@@ -433,6 +433,7 @@ Le lot de 10 pièces pour équiper toute votre maison !`,
       "https://placehold.co/400x400/22c55e/ffffff?text=Male+Femelle",
       "https://placehold.co/400x400/22c55e/ffffff?text=Lot+de+10",
     ],
+    video: "https://video.aliexpress-media.com/play/u/ae_sg_item/3000000362145/p/1/e/6/t/10301/1100213048365.mp4",
     hasOffer: true,
     offerBadge: "VIRAL - Lot de 10 pièces",
     variants: [

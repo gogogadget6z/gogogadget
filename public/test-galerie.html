@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Galerie - Lampe LED</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            padding: 20px;
+        }
+        .media-item {
+            background-color: #1E1E1E;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .media-item video,
+        .media-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .media-label {
+            padding: 15px;
+            background-color: #2A2A2A;
+            font-weight: bold;
+            color: #D4AF37;
+        }
+        .status {
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+        .status.ok {
+            background-color: #22c55e20;
+            color: #22c55e;
+        }
+        .status.error {
+            background-color: #ef444420;
+            color: #ef4444;
+        }
+        h1 {
+            color: #D4AF37;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Test Galerie - Lampe LED</h1>
+
+        <div class="row">
+            <!-- Video -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="media-item">
+                    <div class="media-label">1. Video</div>
+                    <video controls autoplay muted loop playsinline>
+                        <source src="/images/lampe-led-video.mp4" type="video/mp4">
+                        Votre navigateur ne supporte pas la video.
+                    </video>
+                    <div class="status" id="status-video">Chargement...</div>
+                </div>
+            </div>
+
+            <!-- Image 1 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="media-item">
+                    <div class="media-label">2. Image 1 (Type C charging)</div>
+                    <img src="/images/lampe-led.jpg" alt="Lampe LED - Type C charging" id="img1" onerror="this.parentElement.querySelector('.status').className='status error'; this.parentElement.querySelector('.status').textContent='ERREUR de chargement'">
+                    <div class="status" id="status-img1">Chargement...</div>
+                </div>
+            </div>
+
+            <!-- Image 2 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="media-item">
+                    <div class="media-label">3. Image 2 (Quick installation)</div>
+                    <img src="/images/lampe-led-2.jpg" alt="Lampe LED - Quick installation" id="img2" onerror="this.parentElement.querySelector('.status').className='status error'; this.parentElement.querySelector('.status').textContent='ERREUR de chargement'">
+                    <div class="status" id="status-img2">Chargement...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-dark rounded">
+            <h5>Fichiers utilises:</h5>
+            <ul class="mb-0">
+                <li><code>/images/lampe-led-video.mp4</code></li>
+                <li><code>/images/lampe-led.jpg</code></li>
+                <li><code>/images/lampe-led-2.jpg</code></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Check video
+        const video = document.querySelector('video');
+        video.onloadeddata = () => {
+            document.getElementById('status-video').className = 'status ok';
+            document.getElementById('status-video').textContent = 'OK - Video chargee';
+        };
+        video.onerror = () => {
+            document.getElementById('status-video').className = 'status error';
+            document.getElementById('status-video').textContent = 'ERREUR de chargement';
+        };
+
+        // Check images
+        document.getElementById('img1').onload = () => {
+            document.getElementById('status-img1').className = 'status ok';
+            document.getElementById('status-img1').textContent = 'OK - Image chargee';
+        };
+        document.getElementById('img2').onload = () => {
+            document.getElementById('status-img2').className = 'status ok';
+            document.getElementById('status-img2').textContent = 'OK - Image chargee';
+        };
+    </script>
+</body>
+</html>
