@@ -479,11 +479,9 @@ L'accessoire de survie indispensable pour tout automobiliste et motard averti !`
     price: 34.90,
     originalPrice: 59.90,
     category: "electrique",
-    image: "https://placehold.co/400x400/f59e0b/ffffff?text=Kit+Pneu+Express",
+    image: "https://ae-pic-a1.aliexpress-media.com/kf/Sd7538408cf6d4387ba51637f3ceccd46n.jpg",
     images: [
-      "https://placehold.co/400x400/f59e0b/ffffff?text=Stop+%26+Go",
-      "https://placehold.co/400x400/f59e0b/ffffff?text=Pistolet+Auto",
-      "https://placehold.co/400x400/f59e0b/ffffff?text=Kit+Complet",
+      "https://ae-pic-a1.aliexpress-media.com/kf/Sd7538408cf6d4387ba51637f3ceccd46n.jpg",
     ],
     hasOffer: true,
     offerBadge: "NOUVEAU • BEST-SELLER",
