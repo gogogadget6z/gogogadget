@@ -405,6 +405,57 @@ L'outil parfait pour tous les usages du quotidien.`,
       },
     ],
   },
+  {
+    id: "9",
+    name: "Fixations Adhésives Double Face (Mâle/Femelle)",
+    description: `La solution virale pour tout fixer sans percer ! Idéal pour les multiprises, routeurs, cadres ou distributeurs de savon. Adhésif puissant et transparent.
+
+Pourquoi tout le monde en parle :
+
+🔥 Produit Viral : La solution de fixation qui fait le buzz sur les réseaux ! Des millions de vues pour ce petit accessoire qui change tout.
+
+🔩 Zéro Perçage : Fini les trous dans vos murs ! Ces fixations adhésives ultra-puissantes supportent jusqu'à 5 kg par pièce. Installation en quelques secondes, sans outils.
+
+🔗 Système Mâle/Femelle : Le système d'emboîtement ingénieux permet de décrocher et raccrocher vos objets à volonté. Parfait pour les multiprises, box internet, cadres, distributeurs de savon...
+
+👁️ Design Invisible : Transparentes et discrètes, elles se fondent sur n'importe quelle surface. Parfaites pour un rendu propre et minimaliste.
+
+💪 Adhérence Extrême : Technologie nano-adhésive compatible avec le bois, le carrelage, le verre, le métal et le plastique. Résiste à l'humidité et aux variations de température.
+
+🧹 Retrait Sans Traces : Retirez-les sans laisser de résidus ni de marques sur vos surfaces.
+
+Le lot de 10 pièces pour équiper toute votre maison !`,
+    price: 9.99,
+    category: "maison",
+    image: "https://placehold.co/400x400/22c55e/ffffff?text=Fixations",
+    images: [
+      "https://placehold.co/400x400/22c55e/ffffff?text=Fixations+Adhesives",
+      "https://placehold.co/400x400/22c55e/ffffff?text=Male+Femelle",
+      "https://placehold.co/400x400/22c55e/ffffff?text=Lot+de+10",
+    ],
+    hasOffer: true,
+    offerBadge: "VIRAL - Lot de 10 pièces",
+    variants: [
+      {
+        id: "9-lot10",
+        name: "Lot de 10 fixations",
+        price: 9.99,
+        quantity: 10,
+      },
+      {
+        id: "9-lot20",
+        name: "Lot de 20 fixations (-15%)",
+        price: 16.99,
+        quantity: 20,
+      },
+      {
+        id: "9-lot30",
+        name: "Lot de 30 fixations (-25%)",
+        price: 22.49,
+        quantity: 30,
+      },
+    ],
+  },
 ];
 
 export const categories = ["electrique", "maison", "accessoires"] as const;
