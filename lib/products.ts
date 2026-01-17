@@ -427,11 +427,9 @@ Pourquoi tout le monde en parle :
 Le lot de 10 pièces pour équiper toute votre maison !`,
     price: 9.99,
     category: "maison",
-    image: "https://placehold.co/400x400/22c55e/ffffff?text=Fixations",
+    image: "https://ae-pic-a1.aliexpress-media.com/kf/S242fff389ea14a2399b43b67835d3ff92.jpg",
     images: [
-      "https://placehold.co/400x400/22c55e/ffffff?text=Fixations+Adhesives",
-      "https://placehold.co/400x400/22c55e/ffffff?text=Male+Femelle",
-      "https://placehold.co/400x400/22c55e/ffffff?text=Lot+de+10",
+      "https://ae-pic-a1.aliexpress-media.com/kf/S242fff389ea14a2399b43b67835d3ff92.jpg",
     ],
     video: "https://video.aliexpress-media.com/play/u/ae_sg_item/3000000362145/p/1/e/6/t/10301/1100213048365.mp4",
     hasOffer: true,
