@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Product, ProductVariant } from "@/types";
 import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
+import PayPalButton from "./PayPalButton";
 
 interface ProductCardProps {
   product: Product;
@@ -297,6 +298,16 @@ export default function ProductCard({ product }: ProductCardProps) {
             Voir le produit
           </Link>
 
+        </div>
+
+        {/* PayPal Button */}
+        <div className="mt-4 pt-4 border-t border-[#D4AF37]/20">
+          <PayPalButton
+            amount={currentPrice}
+            currency="EUR"
+            productName={`${product.name}${selectedVariant ? ` - ${selectedVariant.name}` : ''}`}
+            className="w-full"
+          />
         </div>
       </div>
     </div>
