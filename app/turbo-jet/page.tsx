@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Wind, Sparkles, CircleDot, Flame, Check, X, Star, ChevronDown, ShoppingCart, Truck, Shield, RotateCcw, CreditCard, ChevronLeft, ChevronRight } from "lucide-react";
+import PayPalButton from "@/components/PayPalButton";
 
 const productImages = [
   "https://s.alicdn.com/@sc04/kf/Ha7bdb6a357444c00b217448b58978ea1p.jpg",
@@ -148,6 +149,23 @@ export default function TurboJetLanding() {
                 </>
               )}
             </button>
+            <div className="mt-4 pt-4 border-t border-white/10">
+              <div className="text-center mb-3">
+                <span className="text-gray-400 text-sm">ou payer avec</span>
+              </div>
+              <PayPalButton
+                amount={99}
+                currency="EUR"
+                productName="Turbo Jet 2025 - Souffleur 4-en-1"
+                className="w-full"
+                style={{
+                  layout: "horizontal",
+                  color: "gold",
+                  shape: "rect",
+                  label: "paypal"
+                }}
+              />
+            </div>
           </div>
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-600/20 rounded-3xl blur-3xl" />
@@ -364,7 +382,24 @@ export default function TurboJetLanding() {
               </>
             )}
           </button>
-          <p className="text-gray-500 text-sm mt-4">Paiement 100% sécurisé par Stripe</p>
+          <div className="mt-4 pt-4 border-t border-white/10">
+            <div className="text-center mb-3">
+              <span className="text-gray-400 text-sm">ou payer avec</span>
+            </div>
+            <PayPalButton
+              amount={99}
+              currency="EUR"
+              productName="Turbo Jet 2025 - Souffleur 4-en-1"
+              className="w-full"
+              style={{
+                layout: "horizontal",
+                color: "gold",
+                shape: "rect",
+                label: "paypal"
+              }}
+            />
+          </div>
+          <p className="text-gray-500 text-sm mt-4">Paiement 100% sécurisé</p>
         </div>
       </section>
 

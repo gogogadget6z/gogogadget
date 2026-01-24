@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Product, ProductVariant } from "@/types";
 import TurboJetBanner from "@/components/TurboJetBanner";
+import PayPalButton from "@/components/PayPalButton";
 
 export default function ProductDetail() {
   const params = useParams();
@@ -244,6 +245,25 @@ export default function ProductDetail() {
                 </>
               )}
             </button>
+
+            {/* Bouton PayPal */}
+            <div className="pt-4 border-t border-gray-700">
+              <div className="text-center mb-3">
+                <span className="text-gray-400 text-sm">ou payer avec</span>
+              </div>
+              <PayPalButton
+                amount={currentPrice}
+                currency="EUR"
+                productName={`${product.name}${selectedVariant ? ` - ${selectedVariant.name}` : ''}`}
+                className="w-full"
+                style={{
+                  layout: "horizontal",
+                  color: "gold",
+                  shape: "rect",
+                  label: "paypal"
+                }}
+              />
+            </div>
 
             {/* Badges de Rassurance */}
             <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-700">
