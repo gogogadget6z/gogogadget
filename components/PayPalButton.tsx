@@ -59,6 +59,15 @@ export default function PayPalButton({
   const scriptLoadedRef = useRef(false);
 
   useEffect(() => {
+    // Récupérer le client ID depuis les variables d'environnement
+    const paypalClientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
+
+    if (!paypalClientId) {
+      setError("Configuration PayPal manquante.");
+      setIsLoading(false);
+      return;
+    }
+
     // Vérifier si le script PayPal est déjà chargé
     const scriptLoaded = !!window.paypal;
     scriptLoadedRef.current = scriptLoaded;
@@ -69,9 +78,9 @@ export default function PayPalButton({
       return;
     }
 
-    // Charger le script PayPal dynamiquement
+    // Charger le script PayPal dynamiquement - UNIQUEMENT le bouton jaune PayPal
     const script = document.createElement("script");
-    script.src = `https://www.paypal.com/sdk/js?client-id=AcH8_x9wgLdWo2rlGBZoip6TOfX2flAPVhfgzeoj2EEHhT8uEtsj6JF0XrT6xq2c4V4w1xer_GERkxtC&currency=${currency}&intent=capture`;
+    script.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=${currency}&intent=capture&components=buttons&disable-funding=card,credit,paylater,venmo,sepa,bancontact,eps,giropay,ideal,mybank,p24,sofort`;
     script.async = true;
 
     script.onload = () => {
