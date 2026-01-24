@@ -19,10 +19,20 @@ declare global {
     paypal?: {
       Buttons: (options: any) => {
         render: (container: string | HTMLElement) => void;
+        close: () => void;
       };
     };
+    paypalButtonsInstances: Map<string, { close: () => void }>;
   }
 }
+
+// Initialiser le Map global pour stocker les instances
+if (typeof window !== "undefined" && !window.paypalButtonsInstances) {
+  window.paypalButtonsInstances = new Map();
+}
+
+// Compteur global pour générer des IDs uniques
+let buttonIdCounter = 0;
 
 export default function PayPalButton({
   amount,
@@ -43,28 +53,31 @@ export default function PayPalButton({
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const paypalContainerRef = useRef<HTMLDivElement>(null);
-  const isRendered = useRef(false);
+
+  // Générer un ID unique pour cette instance
+  const uniqueButtonId = useRef(`paypal-button-${buttonIdCounter++}`);
+  const scriptLoadedRef = useRef(false);
 
   useEffect(() => {
-    // Charger le script PayPal dynamiquement
-    const scriptId = "paypal-js-sdk";
-    const existingScript = document.getElementById(scriptId);
+    // Vérifier si le script PayPal est déjà chargé
+    const scriptLoaded = !!window.paypal;
+    scriptLoadedRef.current = scriptLoaded;
 
-    if (existingScript) {
-      // Script déjà chargé
+    if (scriptLoaded) {
       setIsLoaded(true);
       setIsLoading(false);
       return;
     }
 
+    // Charger le script PayPal dynamiquement
     const script = document.createElement("script");
-    script.id = scriptId;
     script.src = `https://www.paypal.com/sdk/js?client-id=AcH8_x9wgLdWo2rlGBZoip6TOfX2flAPVhfgzeoj2EEHhT8uEtsj6JF0XrT6xq2c4V4w1xer_GERkxtC&currency=${currency}&intent=capture`;
     script.async = true;
 
     script.onload = () => {
       setIsLoaded(true);
       setIsLoading(false);
+      scriptLoadedRef.current = true;
     };
 
     script.onerror = () => {
@@ -75,77 +88,89 @@ export default function PayPalButton({
     document.body.appendChild(script);
 
     return () => {
-      // Nettoyer uniquement si nous avons ajouté le script
-      if (!existingScript) {
-        const scriptElement = document.getElementById(scriptId);
-        if (scriptElement) {
-          document.body.removeChild(scriptElement);
-        }
-      }
+      // Ne pas supprimer le script si d'autres boutons en ont besoin
     };
   }, [currency]);
 
   useEffect(() => {
-    if (!isLoaded || !window.paypal || !paypalContainerRef.current || isRendered.current) {
+    if (!isLoaded || !window.paypal || !paypalContainerRef.current) {
       return;
     }
 
     const paypal = window.paypal;
+    const buttonId = uniqueButtonId.current;
 
-    paypal
-      .Buttons({
-        createOrder: (data: any, actions: any) => {
-          return actions.order.create({
-            purchase_units: [
-              {
-                description: productName,
-                amount: {
-                  value: amount.toFixed(2),
-                  currency_code: currency
-                }
+    // Nettoyer l'instance précédente si elle existe
+    const previousInstance = window.paypalButtonsInstances?.get(buttonId);
+    if (previousInstance) {
+      previousInstance.close();
+      window.paypalButtonsInstances.delete(buttonId);
+    }
+
+    // Créer et rendre le bouton PayPal
+    const buttons = paypal.Buttons({
+      createOrder: (data: any, actions: any) => {
+        return actions.order.create({
+          purchase_units: [
+            {
+              description: productName,
+              amount: {
+                value: amount.toFixed(2),
+                currency_code: currency
               }
-            ]
-          });
-        },
-        onApprove: async (data: any, actions: any) => {
-          try {
-            const order = await actions.order.capture();
-            if (onSuccess) {
-              onSuccess(order);
-            } else {
-              // Redirection par défaut vers la page de succès
-              window.location.href = `/success?order_id=${order.id}&token=${data.orderID}&PayerID=${data.payerID}`;
             }
-          } catch (err) {
-            console.error("Erreur lors de la capture de la commande:", err);
-            if (onError) {
-              onError(err);
-            }
+          ]
+        });
+      },
+      onApprove: async (data: any, actions: any) => {
+        try {
+          const order = await actions.order.capture();
+          if (onSuccess) {
+            onSuccess(order);
+          } else {
+            // Redirection par défaut vers la page de succès
+            window.location.href = `/success?order_id=${order.id}&token=${data.orderID}&PayerID=${data.payerID}`;
           }
-        },
-        onError: (err: any) => {
-          console.error("Erreur PayPal:", err);
-          setError("Une erreur est survenue lors du paiement.");
+        } catch (err) {
+          console.error("Erreur lors de la capture de la commande:", err);
           if (onError) {
             onError(err);
           }
-        },
-        onCancel: () => {
-          if (onCancel) {
-            onCancel();
-          } else {
-            // Redirection par défaut vers la page d'annulation
-            window.location.href = "/cancel";
-          }
-        },
-        style: style
-      })
-      .render(paypalContainerRef.current);
+        }
+      },
+      onError: (err: any) => {
+        console.error("Erreur PayPal:", err);
+        setError("Une erreur est survenue lors du paiement.");
+        if (onError) {
+          onError(err);
+        }
+      },
+      onCancel: () => {
+        if (onCancel) {
+          onCancel();
+        } else {
+          // Redirection par défaut vers la page d'annulation
+          window.location.href = "/cancel";
+        }
+      },
+      style: style
+    });
 
-    isRendered.current = true;
+    // Stocker l'instance pour le nettoyage futur
+    if (window.paypalButtonsInstances) {
+      window.paypalButtonsInstances.set(buttonId, buttons);
+    }
+
+    // Rendre le bouton dans le conteneur
+    buttons.render(paypalContainerRef.current);
 
     return () => {
-      isRendered.current = false;
+      // Nettoyer l'instance du bouton PayPal
+      const instance = window.paypalButtonsInstances?.get(buttonId);
+      if (instance) {
+        instance.close();
+        window.paypalButtonsInstances.delete(buttonId);
+      }
     };
   }, [isLoaded, amount, currency, productName, onSuccess, onError, onCancel, style]);
 
