@@ -18,7 +18,7 @@ declare global {
   interface Window {
     paypal?: {
       Buttons: (options: any) => {
-        render: (container: string) => void;
+        render: (container: string | HTMLElement) => void;
       };
     };
   }
