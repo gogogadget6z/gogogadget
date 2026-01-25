@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Product, ProductVariant } from "@/types";
 import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
 import AddToCartButton from "./AddToCartButton";
+import PayPalButton from "./PayPalButton";
 
 interface ProductCardProps {
   product: Product;
@@ -301,8 +302,24 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Add to Cart Button */}
-        <div className="mt-4 pt-4 border-t border-[#D4AF37]/20">
+        <div className="mt-4 pt-4 border-t border-[#D4AF37]/20 space-y-3">
           <AddToCartButton
+            product={product}
+            selectedVariant={selectedVariant}
+          />
+
+          {/* Séparateur "ou payer directement" */}
+          <div className="relative flex items-center justify-center">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-[#2A2A2A]"></div>
+            </div>
+            <span className="relative bg-[#1E1E1E] px-3 text-xs text-gray-500">
+              ou payer directement
+            </span>
+          </div>
+
+          {/* PayPal Button */}
+          <PayPalButton
             product={product}
             selectedVariant={selectedVariant}
           />

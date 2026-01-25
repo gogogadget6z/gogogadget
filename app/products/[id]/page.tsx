@@ -8,6 +8,7 @@ import { Product, ProductVariant } from "@/types";
 import TurboJetBanner from "@/components/TurboJetBanner";
 import Header from "@/components/Header";
 import AddToCartButton from "@/components/AddToCartButton";
+import PayPalButton from "@/components/PayPalButton";
 
 export default function ProductDetail() {
   const params = useParams();
@@ -195,6 +196,17 @@ export default function ProductDetail() {
               selectedVariant={selectedVariant}
               className="py-4 text-lg"
             />
+
+            {/* Paiement direct PayPal */}
+            <div className="pt-4 border-t border-gray-700">
+              <div className="text-center mb-3">
+                <span className="text-gray-400 text-sm">ou payer directement avec</span>
+              </div>
+              <PayPalButton
+                product={product}
+                selectedVariant={selectedVariant}
+              />
+            </div>
 
             {/* Badges de Rassurance */}
             <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-700">

@@ -154,16 +154,8 @@ export default function TurboJetLanding() {
                 <span className="text-gray-400 text-sm">ou payer avec</span>
               </div>
               <PayPalButton
-                amount={99}
-                currency="EUR"
-                productName="Turbo Jet 2025 - Souffleur 4-en-1"
-                className="w-full"
-                style={{
-                  layout: "horizontal",
-                  color: "gold",
-                  shape: "rect",
-                  label: "paypal"
-                }}
+                product={{ name: "Turbo Jet 2025 - Souffleur 4-en-1", price: 99 }}
+                selectedVariant={null}
               />
             </div>
           </div>
@@ -387,16 +379,8 @@ export default function TurboJetLanding() {
               <span className="text-gray-400 text-sm">ou payer avec</span>
             </div>
             <PayPalButton
-              amount={99}
-              currency="EUR"
-              productName="Turbo Jet 2025 - Souffleur 4-en-1"
-              className="w-full"
-              style={{
-                layout: "horizontal",
-                color: "gold",
-                shape: "rect",
-                label: "paypal"
-              }}
+              product={{ name: "Turbo Jet 2025 - Souffleur 4-en-1", price: 99 }}
+              selectedVariant={null}
             />
           </div>
           <p className="text-gray-500 text-sm mt-4">Paiement 100% sécurisé</p>

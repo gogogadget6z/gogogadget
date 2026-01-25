@@ -4,7 +4,7 @@ import { useCart } from "@/contexts/CartContext";
 import { X, Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js";
+import CartPayPalButton from "./CartPayPalButton";
 
 // Composant pour un article du panier
 function CartItem({
@@ -253,59 +253,12 @@ export default function CartDrawer() {
               )}
             </button>
 
-            {/* PayPal */}
-            <div className="paypal-cart-wrapper">
-              <PayPalScriptProvider
-                options={{
-                  clientId: "AcH8_x9wgLdWo2rlGBZoip6TOfX2flAPVhfgzeoj2EEHhT8uEtsj6JF0XrT6xq2c4V4w1xer_GERkxtC",
-                  currency: "EUR",
-                  intent: "capture",
-                  components: "buttons",
-                }}
-              >
-                <PayPalButtons
-                  fundingSource={FUNDING.PAYPAL}
-                  style={{ layout: "horizontal", color: "gold", shape: "rect", label: "pay", height: 45 }}
-                  createOrder={(data, actions) => {
-                    return actions.order.create({
-                      intent: "CAPTURE",
-                      purchase_units: [{
-                        amount: {
-                          currency_code: "EUR",
-                          value: total.toFixed(2),
-                          breakdown: {
-                            item_total: {
-                              currency_code: "EUR",
-                              value: total.toFixed(2),
-                            },
-                          },
-                        },
-                        items: items.map((item) => ({
-                          name: item.name + (item.variantName ? ` - ${item.variantName}` : ''),
-                          quantity: String(item.quantity),
-                          unit_amount: {
-                            currency_code: "EUR",
-                            value: item.price.toFixed(2),
-                          },
-                          category: "PHYSICAL_GOODS" as const,
-                        })),
-                      }],
-                    });
-                  }}
-                  onApprove={async (data, actions) => {
-                    if (actions.order) {
-                      await actions.order.capture();
-                      clearCart();
-                      window.location.href = `/success?order_id=${data.orderID}`;
-                    }
-                  }}
-                  onError={(err) => {
-                    console.error("Erreur PayPal:", err);
-                    alert("Erreur de paiement PayPal. Veuillez réessayer.");
-                  }}
-                />
-              </PayPalScriptProvider>
-            </div>
+            {/* PayPal avec Option Nucléaire */}
+            <CartPayPalButton
+              items={items}
+              total={total}
+              onSuccess={clearCart}
+            />
 
             {/* Lien continuer shopping */}
             <button
