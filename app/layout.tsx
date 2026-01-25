@@ -3,6 +3,7 @@ import { Playfair_Display, Montserrat } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import CartProviderWrapper from "@/components/CartProviderWrapper";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -31,11 +32,13 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${montserrat.variable} antialiased font-sans min-h-screen flex flex-col`}
       >
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer />
-        <WhatsAppButton />
+        <CartProviderWrapper>
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+          <WhatsAppButton />
+        </CartProviderWrapper>
       </body>
     </html>
   );

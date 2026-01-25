@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Product, ProductVariant } from "@/types";
 import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
-import PayPalButton from "./PayPalButton";
+import AddToCartButton from "./AddToCartButton";
 
 interface ProductCardProps {
   product: Product;
@@ -300,42 +300,11 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         </div>
 
-        {/* Payment Buttons */}
-        <div className="mt-4 pt-4 border-t border-[#D4AF37]/20 space-y-3">
-          {/* Stripe Button */}
-          <button
-            onClick={async () => {
-              try {
-                const response = await fetch('/api/checkout', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    productId: product.id,
-                    variantId: selectedVariant?.id || null,
-                  }),
-                });
-                const data = await response.json();
-                if (data.url) {
-                  window.location.href = data.url;
-                }
-              } catch (error) {
-                console.error('Erreur Stripe:', error);
-              }
-            }}
-            className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-            </svg>
-            Carte bancaire
-          </button>
-
-          {/* PayPal Button */}
-          <PayPalButton
-            amount={currentPrice}
-            currency="EUR"
-            productName={`${product.name}${selectedVariant ? ` - ${selectedVariant.name}` : ''}`}
-            className="w-full"
+        {/* Add to Cart Button */}
+        <div className="mt-4 pt-4 border-t border-[#D4AF37]/20">
+          <AddToCartButton
+            product={product}
+            selectedVariant={selectedVariant}
           />
         </div>
       </div>

@@ -6,7 +6,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Product, ProductVariant } from "@/types";
 import TurboJetBanner from "@/components/TurboJetBanner";
-import PayPalButton from "@/components/PayPalButton";
+import Header from "@/components/Header";
+import AddToCartButton from "@/components/AddToCartButton";
 
 export default function ProductDetail() {
   const params = useParams();
@@ -14,7 +15,6 @@ export default function ProductDetail() {
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -36,36 +36,6 @@ export default function ProductDetail() {
     };
     fetchProduct();
   }, [params.id]);
-
-  const handleCheckout = async () => {
-    if (!product) return;
-    setIsCheckingOut(true);
-
-    try {
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          productId: product.id,
-          variantId: selectedVariant?.id,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        console.error("Checkout error:", data.error);
-        alert("Erreur lors de la création du paiement");
-        setIsCheckingOut(false);
-      }
-    } catch (error) {
-      console.error("Erreur checkout:", error);
-      alert("Erreur lors de la création du paiement");
-      setIsCheckingOut(false);
-    }
-  };
 
   if (isLoading) {
     return (
@@ -97,23 +67,20 @@ export default function ProductDetail() {
 
   return (
     <div className="min-h-screen bg-[#121212]">
-      {/* Header */}
-      <header className="bg-[#1E1E1E]/95 backdrop-blur-md sticky top-0 z-50 border-b border-yellow-500/20">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold text-yellow-500">Gogo Gadget</h1>
-          </Link>
-          <Link href="/" className="text-gray-400 hover:text-yellow-500 transition-colors">
-            &larr; Retour
-          </Link>
-        </div>
-      </header>
+      <Header />
 
       {/* Contenu principal */}
       <main className="max-w-7xl mx-auto px-4 py-8 md:py-12">
+        {/* Breadcrumb */}
+        <div className="mb-6">
+          <Link href="/" className="text-gray-400 hover:text-[#D4AF37] transition-colors text-sm">
+            &larr; Retour à la boutique
+          </Link>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
 
-          {/* Galerie d&apos;images */}
+          {/* Galerie d'images */}
           <div className="space-y-4">
             {/* Image principale */}
             <div className="relative aspect-square bg-[#1E1E1E] rounded-2xl overflow-hidden">
@@ -136,7 +103,7 @@ export default function ProductDetail() {
                 />
               )}
               {product.hasOffer && product.offerBadge && (
-                <div className="absolute top-4 left-4 bg-yellow-500 text-black text-xs font-bold px-3 py-1 rounded-full">
+                <div className="absolute top-4 left-4 bg-[#D4AF37] text-black text-xs font-bold px-3 py-1 rounded-full">
                   {product.offerBadge}
                 </div>
               )}
@@ -149,7 +116,7 @@ export default function ProductDetail() {
                   <button
                     onClick={() => setSelectedImageIndex(0)}
                     className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-all ${
-                      selectedImageIndex === 0 ? "border-yellow-500" : "border-transparent"
+                      selectedImageIndex === 0 ? "border-[#D4AF37]" : "border-transparent"
                     }`}
                   >
                     <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
@@ -163,7 +130,7 @@ export default function ProductDetail() {
                     onClick={() => setSelectedImageIndex(product.video ? index + 1 : index)}
                     className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-all ${
                       (product.video ? index + 1 : index) === selectedImageIndex
-                        ? "border-yellow-500"
+                        ? "border-[#D4AF37]"
                         : "border-transparent hover:border-gray-600"
                     }`}
                   >
@@ -187,7 +154,7 @@ export default function ProductDetail() {
 
             {/* Prix */}
             <div className="flex items-baseline gap-3">
-              <span className="text-4xl font-black text-yellow-500">
+              <span className="text-4xl font-black text-[#D4AF37]">
                 {currentPrice.toFixed(2)}€
               </span>
               {unitPrice && (
@@ -208,13 +175,13 @@ export default function ProductDetail() {
                       onClick={() => setSelectedVariant(variant)}
                       className={`w-full p-4 rounded-xl border-2 transition-all text-left ${
                         selectedVariant?.id === variant.id
-                          ? "border-yellow-500 bg-yellow-500/10"
+                          ? "border-[#D4AF37] bg-[#D4AF37]/10"
                           : "border-gray-700 hover:border-gray-500 bg-[#1E1E1E]"
                       }`}
                     >
                       <div className="flex justify-between items-center">
                         <span className="text-white font-medium">{variant.name}</span>
-                        <span className="text-yellow-500 font-bold">{variant.price.toFixed(2)}€</span>
+                        <span className="text-[#D4AF37] font-bold">{variant.price.toFixed(2)}€</span>
                       </div>
                     </button>
                   ))}
@@ -222,48 +189,12 @@ export default function ProductDetail() {
               </div>
             )}
 
-            {/* Bouton Acheter */}
-            <button
-              onClick={handleCheckout}
-              disabled={isCheckingOut}
-              className="w-full py-4 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-lg rounded-xl transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(234,179,8,0.3)] flex items-center justify-center gap-2"
-            >
-              {isCheckingOut ? (
-                <>
-                  <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                  </svg>
-                  Chargement...
-                </>
-              ) : (
-                <>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                  Acheter maintenant
-                </>
-              )}
-            </button>
-
-            {/* Bouton PayPal */}
-            <div className="pt-4 border-t border-gray-700">
-              <div className="text-center mb-3">
-                <span className="text-gray-400 text-sm">ou payer avec</span>
-              </div>
-              <PayPalButton
-                amount={currentPrice}
-                currency="EUR"
-                productName={`${product.name}${selectedVariant ? ` - ${selectedVariant.name}` : ''}`}
-                className="w-full"
-                style={{
-                  layout: "horizontal",
-                  color: "gold",
-                  shape: "rect",
-                  label: "paypal"
-                }}
-              />
-            </div>
+            {/* Bouton Ajouter au panier */}
+            <AddToCartButton
+              product={product}
+              selectedVariant={selectedVariant}
+              className="py-4 text-lg"
+            />
 
             {/* Badges de Rassurance */}
             <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-700">
