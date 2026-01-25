@@ -47,3 +47,41 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #C4A030;
 }
+
+/* =============================================
+   PayPal SDK Overlay Override
+   Réduit l'opacité du backdrop pour éviter
+   l'effet "écran noir" lors de l'ouverture popup
+   ============================================= */
+
+/* Backdrop principal du SDK PayPal */
+.paypal-checkout-sandbox,
+.paypal-checkout-overlay,
+.paypal-overlay-context-popup,
+[data-paypal-overlay],
+body.paypal-overlay-context-popup::before {
+  background: rgba(18, 18, 18, 0.75) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* Container de l'overlay de contingence (fallback popup blocker) */
+.paypal-checkout-sandbox .paypal-checkout-sandbox-iframe-container,
+.paypal-checkout-modal-container {
+  background: rgba(18, 18, 18, 0.85) !important;
+}
+
+/* Style du message "Le navigateur sécurisé n'apparaît pas" */
+.paypal-checkout-message,
+.paypal-checkout-continue {
+  font-family: inherit !important;
+}
+
+/* Assure que le z-index du contenu reste accessible */
+body.paypal-overlay-context-popup {
+  overflow: hidden;
+}
+
+body.paypal-overlay-context-popup > *:not(.paypal-checkout-sandbox):not(iframe[name*="paypal"]) {
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}

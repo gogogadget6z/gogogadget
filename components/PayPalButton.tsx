@@ -1,202 +1,232 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { PayPalScriptProvider, PayPalButtons, usePayPalScriptReducer, FUNDING } from "@paypal/react-paypal-js";
+import { useEffect, useState, useCallback, useRef } from "react";
 
 interface PayPalButtonProps {
-  amount: number;
-  currency?: string;
-  productName?: string;
-  onSuccess?: (orderData: any) => void;
-  onError?: (error: any) => void;
-  onCancel?: () => void;
-  className?: string;
-  style?: any;
+  product: {
+    title?: string;
+    name?: string;
+    price: number;
+  };
+  selectedVariant?: {
+    price: number;
+    name?: string;
+  } | null;
 }
 
-// Type pour l'objet global PayPal
-declare global {
-  interface Window {
-    paypal?: {
-      Buttons: (options: any) => {
-        render: (container: string | HTMLElement) => void;
-        close: () => void;
-      };
-    };
-    paypalButtonsInstances: Map<string, { close: () => void }>;
-  }
-}
-
-// Initialiser le Map global pour stocker les instances
-if (typeof window !== "undefined" && !window.paypalButtonsInstances) {
-  window.paypalButtonsInstances = new Map();
-}
-
-// Compteur global pour générer des IDs uniques
-let buttonIdCounter = 0;
-
-export default function PayPalButton({
-  amount,
-  currency = "EUR",
-  productName = "Produit",
-  onSuccess,
-  onError,
-  onCancel,
-  className = "",
-  style = {
-    layout: "vertical",
-    color: "gold",
-    shape: "rect",
-    label: "paypal"
-  }
-}: PayPalButtonProps) {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const paypalContainerRef = useRef<HTMLDivElement>(null);
-
-  // Générer un ID unique pour cette instance
-  const uniqueButtonId = useRef(`paypal-button-${buttonIdCounter++}`);
-  const scriptLoadedRef = useRef(false);
-
+// Force override des styles PayPal via JS (contourne les styles inline du SDK)
+function usePayPalOverlayOverride(popupIsOpen: boolean) {
   useEffect(() => {
-    // Récupérer le client ID depuis les variables d'environnement
-    const paypalClientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
-
-    if (!paypalClientId) {
-      setError("Configuration PayPal manquante.");
-      setIsLoading(false);
-      return;
-    }
-
-    // Vérifier si le script PayPal est déjà chargé
-    const scriptLoaded = !!window.paypal;
-    scriptLoadedRef.current = scriptLoaded;
-
-    if (scriptLoaded) {
-      setIsLoaded(true);
-      setIsLoading(false);
-      return;
-    }
-
-    // Charger le script PayPal dynamiquement - UNIQUEMENT le bouton jaune PayPal
-    const script = document.createElement("script");
-    script.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=${currency}&intent=capture&components=buttons&disable-funding=card,credit,paylater,venmo,sepa,bancontact,eps,giropay,ideal,mybank,p24,sofort`;
-    script.async = true;
-
-    script.onload = () => {
-      setIsLoaded(true);
-      setIsLoading(false);
-      scriptLoadedRef.current = true;
-    };
-
-    script.onerror = () => {
-      setError("Impossible de charger PayPal. Veuillez réessayer.");
-      setIsLoading(false);
-    };
-
-    document.body.appendChild(script);
-
-    return () => {
-      // Ne pas supprimer le script si d'autres boutons en ont besoin
-    };
-  }, [currency]);
-
-  useEffect(() => {
-    if (!isLoaded || !window.paypal || !paypalContainerRef.current) {
-      return;
-    }
-
-    const paypal = window.paypal;
-    const buttonId = uniqueButtonId.current;
-
-    // Nettoyer l'instance précédente si elle existe
-    const previousInstance = window.paypalButtonsInstances?.get(buttonId);
-    if (previousInstance) {
-      previousInstance.close();
-      window.paypalButtonsInstances.delete(buttonId);
-    }
-
-    // Créer et rendre le bouton PayPal
-    const buttons = paypal.Buttons({
-      createOrder: (data: any, actions: any) => {
-        return actions.order.create({
-          purchase_units: [
-            {
-              description: productName,
-              amount: {
-                value: amount.toFixed(2),
-                currency_code: currency
-              }
-            }
-          ]
-        });
-      },
-      onApprove: async (data: any, actions: any) => {
-        try {
-          const order = await actions.order.capture();
-          if (onSuccess) {
-            onSuccess(order);
-          } else {
-            // Redirection par défaut vers la page de succès
-            window.location.href = `/success?order_id=${order.id}&token=${data.orderID}&PayerID=${data.payerID}`;
-          }
-        } catch (err) {
-          console.error("Erreur lors de la capture de la commande:", err);
-          if (onError) {
-            onError(err);
-          }
-        }
-      },
-      onError: (err: any) => {
-        console.error("Erreur PayPal:", err);
-        setError("Une erreur est survenue lors du paiement.");
-        if (onError) {
-          onError(err);
-        }
-      },
-      onCancel: () => {
-        if (onCancel) {
-          onCancel();
-        } else {
-          // Redirection par défaut vers la page d'annulation
-          window.location.href = "/cancel";
-        }
-      },
-      style: style
-    });
-
-    // Stocker l'instance pour le nettoyage futur
-    if (window.paypalButtonsInstances) {
-      window.paypalButtonsInstances.set(buttonId, buttons);
-    }
-
-    // Rendre le bouton dans le conteneur
-    buttons.render(paypalContainerRef.current);
-
-    return () => {
-      // Nettoyer l'instance du bouton PayPal
-      const instance = window.paypalButtonsInstances?.get(buttonId);
-      if (instance) {
-        instance.close();
-        window.paypalButtonsInstances.delete(buttonId);
+    // Fonction pour forcer les styles sur un élément
+    const forceOverlayStyles = (element: HTMLElement, hide: boolean) => {
+      if (hide) {
+        // Option nucléaire : masquer si popup ouverte
+        element.style.setProperty('display', 'none', 'important');
+      } else {
+        // Sinon, rendre semi-transparent
+        element.style.setProperty('background', 'rgba(18, 18, 18, 0.6)', 'important');
+        element.style.setProperty('background-color', 'rgba(18, 18, 18, 0.6)', 'important');
+        element.style.setProperty('backdrop-filter', 'blur(4px)', 'important');
+        element.style.setProperty('-webkit-backdrop-filter', 'blur(4px)', 'important');
       }
     };
-  }, [isLoaded, amount, currency, productName, onSuccess, onError, onCancel, style]);
+
+    // Sélecteurs connus du SDK PayPal pour l'overlay
+    const overlaySelectors = [
+      '.paypal-checkout-sandbox',
+      '.paypal-checkout-overlay',
+      '.paypal-overlay-context-popup',
+      '[data-paypal-overlay]',
+      'div[style*="z-index"][style*="position: fixed"]', // Fallback générique
+    ];
+
+    // Applique les styles sur les overlays existants
+    const applyToExisting = () => {
+      overlaySelectors.forEach(selector => {
+        document.querySelectorAll<HTMLElement>(selector).forEach(el => {
+          // Vérifie que c'est bien un overlay PayPal (pas un autre élément)
+          const style = window.getComputedStyle(el);
+          if (style.position === 'fixed' && parseInt(style.zIndex) > 1000) {
+            forceOverlayStyles(el, popupIsOpen);
+          }
+        });
+      });
+
+      // Ciblage spécifique des iframes PayPal overlay
+      document.querySelectorAll<HTMLElement>('iframe[name*="paypal"]').forEach(iframe => {
+        const parent = iframe.parentElement;
+        if (parent && parent.style.position === 'fixed') {
+          forceOverlayStyles(parent, popupIsOpen);
+        }
+      });
+    };
+
+    // Observer pour détecter l'ajout dynamique d'overlays par le SDK
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach(mutation => {
+        mutation.addedNodes.forEach(node => {
+          if (node instanceof HTMLElement) {
+            // Vérifie si c'est un overlay PayPal
+            const isPayPalOverlay =
+              node.className?.includes?.('paypal') ||
+              node.id?.includes?.('paypal') ||
+              node.querySelector?.('[class*="paypal"]') ||
+              (node.style?.position === 'fixed' && node.style?.zIndex && parseInt(node.style.zIndex) > 2000);
+
+            if (isPayPalOverlay) {
+              forceOverlayStyles(node, popupIsOpen);
+              // Aussi traiter les enfants
+              node.querySelectorAll<HTMLElement>('*').forEach(child => {
+                const style = window.getComputedStyle(child);
+                if (style.backgroundColor && style.backgroundColor !== 'rgba(0, 0, 0, 0)') {
+                  forceOverlayStyles(child, popupIsOpen);
+                }
+              });
+            }
+          }
+        });
+      });
+    });
+
+    // Démarre l'observation
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['style', 'class']
+    });
+
+    // Applique immédiatement aux éléments existants
+    applyToExisting();
+
+    // Réapplique périodiquement (le SDK peut réappliquer ses styles)
+    const interval = setInterval(applyToExisting, 200);
+
+    return () => {
+      observer.disconnect();
+      clearInterval(interval);
+    };
+  }, [popupIsOpen]);
+}
+
+// Composant interne pour le bouton
+function PayPalButtonWrapper({ product, selectedVariant }: PayPalButtonProps) {
+  const [{ isPending }] = usePayPalScriptReducer();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const popupOpenedRef = useRef(false);
+  const [popupIsOpen, setPopupIsOpen] = useState(false);
+  const price = selectedVariant?.price ?? product.price;
+
+  // Active l'override des styles overlay
+  usePayPalOverlayOverride(popupIsOpen);
+
+  // Réinitialise l'état si l'utilisateur ferme la popup sans compléter
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && popupOpenedRef.current) {
+        // Délai pour laisser PayPal terminer son flow
+        setTimeout(() => {
+          if (popupOpenedRef.current) {
+            popupOpenedRef.current = false;
+            setIsProcessing(false);
+            setPopupIsOpen(false);
+          }
+        }, 500);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
+
+  const handleClick = useCallback((data: Record<string, unknown>, actions: { resolve: () => Promise<void>; reject: () => Promise<void> }) => {
+    // Marque que la popup va s'ouvrir
+    popupOpenedRef.current = true;
+    setIsProcessing(true);
+    setPopupIsOpen(true); // Active l'option nucléaire : masque l'overlay
+    // Permet au SDK de continuer l'ouverture de la popup
+    return actions.resolve();
+  }, []);
+
+  const handleCancel = useCallback(() => {
+    // L'utilisateur a fermé la popup PayPal sans payer
+    popupOpenedRef.current = false;
+    setIsProcessing(false);
+    setPopupIsOpen(false);
+  }, []);
+
+  if (isPending) {
+    return <div className="text-center py-4 text-gray-400">Chargement PayPal...</div>;
+  }
 
   return (
-    <div className={`paypal-button-container ${className}`}>
-      {isLoading && (
-        <div className="flex items-center justify-center p-4">
-          <svg className="w-6 h-6 text-[#D4AF37] animate-spin" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-          </svg>
-        </div>
-      )}
-      {error && (
-        <div className="text-red-500 text-sm text-center p-2">{error}</div>
-      )}
-      <div ref={paypalContainerRef} />
-    </div>
+    <PayPalButtons
+      fundingSource={FUNDING.PAYPAL}
+      style={{ layout: "vertical", color: "gold", shape: "rect", label: "pay" }}
+      disabled={isProcessing}
+      onClick={handleClick}
+      createOrder={(data, actions) => {
+        const cleanPrice = Number(price).toFixed(2);
+        console.log("Creating order for:", cleanPrice);
+
+        return actions.order.create({
+          intent: "CAPTURE",
+          purchase_units: [
+            {
+              amount: {
+                currency_code: "EUR",
+                value: cleanPrice,
+              },
+            },
+          ],
+        });
+      }}
+      onApprove={async (data, actions) => {
+        if (actions.order) {
+          await actions.order.capture();
+          popupOpenedRef.current = false;
+          setPopupIsOpen(false);
+          window.location.href = `/success?order_id=${data.orderID}`;
+        }
+      }}
+      onCancel={handleCancel}
+      onError={(err) => {
+        console.error("Erreur PayPal:", err);
+        popupOpenedRef.current = false;
+        setIsProcessing(false);
+        setPopupIsOpen(false);
+        alert("Erreur de paiement. Veuillez réessayer.");
+      }}
+    />
   );
 }
+
+// Composant principal avec Provider
+const PayPalButton = ({ product, selectedVariant }: PayPalButtonProps) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <div className="text-center py-4 text-gray-400">Chargement...</div>;
+  }
+
+  return (
+    <PayPalScriptProvider
+      options={{
+        clientId: "AcH8_x9wgLdWo2rlGBZoip6TOfX2flAPVhfgzeoj2EEHhT8uEtsj6JF0XrT6xq2c4V4w1xer_GERkxtC",
+        currency: "EUR",
+        intent: "capture",
+        components: "buttons",
+      }}
+      deferLoading={false}
+    >
+      <PayPalButtonWrapper product={product} selectedVariant={selectedVariant} />
+    </PayPalScriptProvider>
+  );
+};
+
+export default PayPalButton;
