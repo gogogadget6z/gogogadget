@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, User } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
+import { useSession } from "next-auth/react";
 
 export default function Header() {
   const { itemCount, justAdded, openCart } = useCart();
+  const { data: session, status } = useSession();
 
   return (
     <header className="bg-[#1E1E1E]/95 backdrop-blur-md shadow-lg shadow-black/20 sticky top-0 z-50 border-b border-[#D4AF37]/20">
@@ -37,8 +39,33 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* Right side: Cart + Admin */}
+        {/* Right side: Account + Cart + Admin */}
         <div className="flex items-center gap-2 sm:gap-4">
+          {/* Account / Login Button */}
+          {status === "loading" ? (
+            <div className="p-2">
+              <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-[#3A3A3A] border-t-[#D4AF37] animate-spin" />
+            </div>
+          ) : session ? (
+            <Link
+              href="/mon-compte"
+              className="flex items-center gap-2 px-3 py-2 bg-[#D4AF37]/10 text-[#D4AF37] rounded-lg hover:bg-[#D4AF37]/20 transition-colors"
+              title="Mon compte"
+            >
+              <User className="w-5 h-5 sm:w-6 sm:h-6" />
+              <span className="hidden sm:inline text-sm font-medium">Mon compte</span>
+            </Link>
+          ) : (
+            <Link
+              href="/auth/signin"
+              className="flex items-center gap-2 px-3 py-2 bg-[#D4AF37] text-[#121212] rounded-lg hover:bg-[#E5C048] transition-colors"
+              title="Connexion"
+            >
+              <User className="w-5 h-5 sm:w-6 sm:h-6" />
+              <span className="hidden sm:inline text-sm font-medium">Connexion</span>
+            </Link>
+          )}
+
           {/* Cart Icon */}
           <button
             onClick={openCart}
