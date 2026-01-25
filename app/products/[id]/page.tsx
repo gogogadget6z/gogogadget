@@ -16,6 +16,37 @@ export default function ProductDetail() {
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+
+  const handleStripeCheckout = async () => {
+    if (!product || isCheckingOut) return;
+    setIsCheckingOut(true);
+
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId: product.id,
+          variantId: selectedVariant?.id,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        console.error("Checkout error:", data.error);
+        alert("Erreur lors de la création du paiement");
+        setIsCheckingOut(false);
+      }
+    } catch (error) {
+      console.error("Erreur checkout:", error);
+      alert("Erreur lors de la création du paiement");
+      setIsCheckingOut(false);
+    }
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -197,11 +228,34 @@ export default function ProductDetail() {
               className="py-4 text-lg"
             />
 
-            {/* Paiement direct PayPal */}
-            <div className="pt-4 border-t border-gray-700">
-              <div className="text-center mb-3">
-                <span className="text-gray-400 text-sm">ou payer directement avec</span>
+            {/* Paiement direct */}
+            <div className="pt-4 border-t border-gray-700 space-y-3">
+              <div className="text-center">
+                <span className="text-gray-400 text-sm">ou payer directement</span>
               </div>
+
+              {/* Bouton Carte Bancaire - Bleu */}
+              <button
+                onClick={handleStripeCheckout}
+                disabled={isCheckingOut}
+                className="w-full py-4 px-4 bg-[#0070f3] hover:bg-[#0060df] text-white font-bold text-lg rounded-xl transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg flex items-center justify-center gap-2"
+              >
+                {isCheckingOut ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    Redirection...
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                    </svg>
+                    Carte bancaire
+                  </>
+                )}
+              </button>
+
+              {/* PayPal Button */}
               <PayPalButton
                 product={product}
                 selectedVariant={selectedVariant}
