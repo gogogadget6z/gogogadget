@@ -5,7 +5,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Resend({
       apiKey: process.env.AUTH_RESEND_KEY,
-      from: "onboarding@resend.dev",
+      from: "contact@gogogadget.app",
     }),
   ],
   pages: {

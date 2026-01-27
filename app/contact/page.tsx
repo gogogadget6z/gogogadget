@@ -51,14 +51,14 @@ export default function Contact() {
           <div className="text-center py-8 border-t border-b border-gray-800">
             <p className="text-sm text-gray-500 mb-3">Écrivez-nous à :</p>
             <a
-              href="mailto:gogogadget.app@gmail.com"
+              href="mailto:contact@gogogadget.app"
               className="text-2xl sm:text-3xl font-bold text-white hover:text-yellow-500 transition-colors break-all"
             >
-              gogogadget.app@gmail.com
+              contact@gogogadget.app
             </a>
             <div className="mt-6">
               <a
-                href="mailto:gogogadget.app@gmail.com"
+                href="mailto:contact@gogogadget.app"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl transition-all duration-300 shadow-lg hover:scale-105"
               >
                 <svg
